@@ -19,6 +19,9 @@ Supported flags:
 - `--max-tokens N`
 - `--interactive` — multi-turn mode
 - `--list-devices` — show available OpenVINO devices
+- `--compress-weights` — compress BF16/FP32 weights to FP16 (mainly for FP32 models)
+
+Performance (Qwen2.5-0.5B): CPU ~129 tok/s, GPU ~100-119 tok/s
 
 Cached model: `/mnt/yxu28/models/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B/`
 

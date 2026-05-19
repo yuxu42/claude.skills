@@ -23,10 +23,21 @@ Verify these exist and report:
 ### info
 
 Project: `/home/yxu28/projects/run_qwen25/`
-- `modeling_qwen25.hpp/cpp` — C++ Qwen2.5 model (GQA, KV-cache, RoPE, SwiGLU, RMSNorm)
+- `modeling_qwen25.hpp/cpp` — C++ Qwen2.5 model (GQA, KV-cache, fused RoPE, SwiGLU, RMSNorm)
 - `run_qwen25.cpp` — C++ runner (loads config.json + safetensors, compiles, generates)
 - `hf_to_openvino.py` — Python pipeline (download, tokenize, run)
 - `CMakeLists.txt` — links against composable_pipeline + OpenVINO runtime
-- Performance: CPU ~83 tok/s, GPU ~40-53 tok/s (0.5B model)
+
+Optimizations applied:
+- Shared causal mask (computed once, reused across all 24 layers — removes per-layer ShapeOf/Gather/Range)
+- Fused internal RoPE op (single kernel instead of Slice+Mul+Sub+Concat decomposition)
+- FP16 inference precision hint for GPU
+- Optional `--compress-weights` for FP32→FP16 weight compression
+- Optional `--export-ir` / `--load-ir` for OpenVINO IR serialization
+
+Performance (Qwen2.5-0.5B):
+- CPU: ~129 tok/s
+- GPU (Intel Arc A770): ~100-119 tok/s
+- Graph ops: 2395 (down from 3424 original)
 
 $ARGUMENTS
