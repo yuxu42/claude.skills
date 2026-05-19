@@ -240,15 +240,123 @@ For larger models (3B+), GPU should significantly outperform CPU as compute dens
 
 ---
 
+## Step 7: OpenCL Kernel-Level Profiling
+
+Used [opencl-intercept-layer](https://github.com/intel/opencl-intercept-layer) to capture per-kernel timing:
+
+```bash
+# Build the intercept layer
+git clone https://github.com/intel/opencl-intercept-layer /tmp/opencl-intercept-layer
+cd /tmp/opencl-intercept-layer && mkdir build && cd build
+cmake .. && make -j$(nproc)
+
+# Run with verbose device timing + Chrome device timeline
+/tmp/opencl-intercept-layer/build/cliloader/cliloader -dv -cdt -f --dump-dir /tmp/cli_trace \
+    ./build/run_qwen25 MODEL_DIR --device GPU 151643 108386 198
+```
+
+**Outputs:**
+- `clintercept_report.txt` — per-kernel timing summary
+- `clintercept_trace.json` — Chrome trace (load in `chrome://tracing`)
+
+### Profiling Results (50-token generation)
+
+**Per-decode-step breakdown:**
+```
+Total wall time per step:    18.9ms (profiled) / ~8-10ms (real)
+GPU kernel compute:           6.9ms  (36% utilization in profiling)
+GPU→CPU logit sync:           3.0ms  (16%)
+CPU dispatch overhead:        9.0ms  (48% — inflated by profiling)
+```
+
+**GPU kernel time by category (one decode step):**
+```
+gemm (linear layers):        4479us (172 kernels, 65.1%)
+sdpa (attention):            1400us ( 24 kernels, 20.3%)
+rms_norm:                     361us ( 49 kernels,  5.3%)
+rope:                         320us ( 48 kernels,  4.6%)
+concatenation (KV cache):    194us ( 48 kernels,  2.8%)
+other:                         127us                1.9%
+```
+
+**Top kernel hotspots (total across 50-token generation):**
+```
+17.4%  sdpa_micro__generate     1176 calls, 58us avg
+16.9%  gemm [2432x4x1]         2400 calls, 27us avg  ← MLP up/gate proj
+16.7%  gemm [896x1x8]          2352 calls, 28us avg  ← attention/MLP out proj
+ 7.3%  gemm [65536x8x1]          50 calls, 572us avg ← lm_head (vocab logits)
+ 6.6%  reorder_data               48 calls, 533us avg ← prefill layout conversion
+ 4.6%  rms_gpu_bfyx_opt         2401 calls, 7us avg
+ 4.5%  gemm [128x8x8]          2400 calls, 7us avg   ← Q/K proj
+ 4.3%  HtoD 272MB                  1 call            ← one-time weight upload
+ 3.4%  gemm [896x4x2]          1200 calls, 11us avg  ← V proj
+ 3.0%  reorder_data               24 calls, 494us avg ← prefill
+ 2.5%  concatenation_ref        2352 calls, 4us avg   ← KV-cache append
+ 2.2%  rope_opt (K)             1176 calls, 7us avg
+ 1.8%  rope_opt (Q)             1176 calls, 6us avg
+```
+
+### Key Finding: Logits Readback Bottleneck
+
+The biggest single optimization opportunity:
+
+```
+gemm [65536x8x1] → 3ms gap → HtoH memcpy (607744 bytes)
+```
+
+After `lm_head` projects hidden states to vocab logits (151936 floats = 607KB), all logits are copied from GPU to CPU for argmax token selection. The 3ms gap is the CPU blocking on GPU completion.
+
+**This happens every decode step**: 3ms × 50 steps = 150ms wasted on sync.
+
+**Fix:** Add GPU-side `TopK(k=1)` or `ArgMax` after lm_head in the model graph. Only read back the winning token ID (4 bytes) instead of full logits.
+
+---
+
 ## Remaining Optimization Opportunities
 
-Still 122 `ShapeOf` ops remaining from:
-- **KV cache append** (`append_kv_cache`) — uses shape queries to track cache state
-- **RoPE cos/sin computation** — some reshape ops still use dynamic shapes
+### High Impact (achievable at model/graph level)
 
-These are in the framework (`openvino.pipeline.mx`) and would require upstream changes to fix.
+1. **GPU-side ArgMax** (+15-30% decode throughput)
+   - Eliminate 607KB logit readback per step
+   - Add `ov::op::v3::TopK` node after lm_head projection
+   - Only copy back 4-byte token ID instead of 607KB logits
 
-Additional future work:
+2. **Remaining 122 `ShapeOf` ops** (from framework)
+   - KV cache append (`append_kv_cache`) — uses shape queries to track cache state
+   - RoPE cos/sin computation — some reshape ops still use dynamic shapes
+   - These are in `openvino.pipeline.mx` and would require upstream changes
+
+### Medium Impact (requires GPU plugin changes)
+
+3. **Reorder elimination for prefill** (-37ms prefill time)
+   - 48+24 reorder_data calls total 37ms during prefill (tensor layout conversions)
+   - Fix: `force_output_layout` hints or ensuring consistent bfyx format
+
+4. **KV-cache concatenation** (currently uses unoptimized "ref" kernel)
+   - `concatenation_gpu_simple_ref` — naive element copy
+   - Fix: Paged attention (avoids concat entirely) or optimized append kernel
+
+### Low Impact / Already Good
+
+5. **"ref" fallback kernels** (activation_ref, generic_eltwise_ref, select_gpu_ref)
+   - Small tensors that don't hit GPU plugin's optimized kernel thresholds
+   - Individually negligible but add dispatch overhead
+
+### Future Work
+
 - INT4/INT8 weight quantization (via `SafetensorsWeightFinalizer` with `QuantizationConfig`)
 - Paged attention for longer sequences
 - Speculative decoding for higher throughput
+
+---
+
+## Theoretical Performance Limits
+
+| Metric | Value |
+|--------|-------|
+| GPU kernel compute per step | ~6.5ms |
+| Theoretical max (100% util) | ~154 tok/s |
+| With GPU-side argmax | ~130-140 tok/s |
+| Current actual | 100-119 tok/s (65-77% of theoretical) |
+
+The model is **compute-bound on GEMM** (65% of kernel time), which is expected and healthy. The A770's memory bandwidth (560 GB/s) is not the bottleneck for this small model — the matrices (896×896, 896×4864) are too small to saturate it.
