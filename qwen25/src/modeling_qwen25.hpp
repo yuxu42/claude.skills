@@ -63,7 +63,6 @@ public:
                     Module* parent = nullptr);
 
     Tensor forward(const Tensor& hidden_states,
-                   const Tensor& beam_idx,
                    const Tensor& rope_cos,
                    const Tensor& rope_sin,
                    const Tensor* causal_mask) const;
@@ -120,7 +119,6 @@ public:
                        Module* parent = nullptr);
 
     Tensor forward(const Tensor& hidden_states,
-                   const Tensor& beam_idx,
                    const Tensor& rope_cos,
                    const Tensor& rope_sin,
                    const Tensor* causal_mask) const;
@@ -138,7 +136,6 @@ public:
 
     Tensor forward(const Tensor& input_ids,
                    const Tensor& position_ids,
-                   const Tensor& beam_idx,
                    const Tensor& attention_mask);
 
     VocabEmbedding& embed_tokens();
@@ -158,7 +155,6 @@ public:
 
     Tensor forward(const Tensor& input_ids,
                    const Tensor& position_ids,
-                   const Tensor& beam_idx,
                    const Tensor& attention_mask);
 
 private:

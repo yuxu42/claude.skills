@@ -164,11 +164,6 @@ void greedy_generate(ov::InferRequest& infer_request,
     }
     infer_request.set_tensor("position_ids", pos_ids_tensor);
 
-    // Set beam_idx
-    auto beam_idx_tensor = ov::Tensor(ov::element::i32, {1});
-    beam_idx_tensor.data<int32_t>()[0] = 0;
-    infer_request.set_tensor("beam_idx", beam_idx_tensor);
-
     std::vector<int64_t> generated_tokens;
     int64_t next_pos = seq_len;
 

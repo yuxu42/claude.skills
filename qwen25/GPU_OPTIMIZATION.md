@@ -115,6 +115,36 @@ This was the biggest single win because it eliminated the most frequent small-op
 
 ---
 
+## Step 3.5: Remove beam_idx Gather from KV Cache (Greedy Mode)
+
+**Problem:** The standard `append_kv_cache()` inserts a `Gather(beam_idx)` between `ReadValue` and `Concat`:
+```
+ReadValue → Gather(beam_idx) → Concat(new_kv) → Assign
+```
+
+After the GPU plugin's `KVCacheFusion` transformation, this creates a 3-input `KVCache` op. But `UnsqueezeBroadcastReshapeSDPAFusion` (which absorbs `repeat_kv` GQA expansion into SDPA) only matches **2-input** KVCache patterns. The 3-input version blocks the fusion chain.
+
+For greedy decoding (batch=1, no beam search), `beam_idx` is always `[0]` — an identity operation. Removing it:
+1. Eliminates `beam_table_update` kernel (48 calls/inference)
+2. Removes a CPU↔GPU synchronization point
+3. Produces cleaner graph for plugin optimizations
+
+**Fix:** Implement a local `append_kv_cache_greedy` that skips the Gather:
+
+```cpp
+// No Gather — directly concat cached with new tokens
+auto k_combined = pipeline_ops::concat({Tensor(k_read->output(0), op_ctx), keys}, 2);
+auto v_combined = pipeline_ops::concat({Tensor(v_read->output(0), op_ctx), values}, 2);
+```
+
+Remove `beam_idx` from all forward() signatures since it's no longer used.
+
+**Result:** 2395 → 2346 ops. GPU: 92-119 → **122-127 tok/s** (+22%)
+
+**Trade-off:** CPU regresses (129→71 tok/s) because the CPU plugin's stateful execution path optimizes differently with/without Gather. For GPU-targeted deployment this is acceptable.
+
+---
+
 ## Step 4: GPU Compilation Hints
 
 Set FP16 inference precision and performance mode for the GPU plugin:
@@ -196,9 +226,14 @@ Export the optimized graph to IR format for faster repeated runs:
 |---|---|---|---|
 | Original (per-layer mask, decomposed RoPE) | 3424 | 40-53 | 83-86 |
 | + Shared causal mask | 2780 | 55-60 | 91-96 |
-| **+ Fused RoPE (final)** | **2395** | **92-119** | **129** |
+| + Fused RoPE | 2395 | 92-119 | 129 |
+| **+ Greedy KV cache (no beam_idx)** | **2346** | **122-127** | **71** |
 
-**Total GPU improvement: 2-3× faster** (40 → 100+ tok/s)
+**Total GPU improvement: 3× faster** (40 → 125 tok/s)
+
+Note: Removing beam_idx regresses CPU (129→71 tok/s) because the CPU plugin's
+stateful execution path optimizes differently with/without Gather. The GPU benefit
+(+22%) outweighs this since GPU is now 1.8× faster than CPU.
 
 ---
 

@@ -3,7 +3,6 @@
 
 #include "modeling_qwen25.hpp"
 
-#include "modeling/ops/kv_cache.hpp"
 #include "modeling/ops/llm.hpp"
 #include "modeling/ops/op_policy.hpp"
 #include "modeling/ops/ops.hpp"
@@ -12,7 +11,10 @@
 
 #include <cmath>
 #include <openvino/core/except.hpp>
+#include <openvino/op/util/variable.hpp>
 #include <openvino/openvino.hpp>
+#include <openvino/opsets/opset13.hpp>
+#include <regex>
 #include <string>
 
 namespace {
@@ -21,6 +23,75 @@ auto set_name = [](auto node, const std::string& name) {
     node->output(0).set_names({name});
     node->set_friendly_name(name);
 };
+
+namespace pipeline_ops = ::ov::pipeline::ops;
+namespace pipeline_shape = ::ov::pipeline::shape;
+using ::ov::pipeline::modeling::ops::Tensor;
+using ::ov::pipeline::BuilderContext;
+
+int extract_layer_index(const std::string& cache_prefix) {
+    static const std::regex layer_pattern(R"(layers[\[\.](\d+)[\]\.]?)");
+    std::smatch match;
+    if (std::regex_search(cache_prefix, match, layer_pattern)) {
+        return std::stoi(match[1].str());
+    }
+    return -1;
+}
+
+// KV cache without beam_idx Gather — enables GPU plugin KVCache+SDPA fusion.
+// The standard append_kv_cache inserts Gather(beam_idx) which creates a 3-input
+// KVCache after fusion, blocking UnsqueezeBroadcastReshapeSDPAFusion pattern match.
+std::pair<Tensor, Tensor> append_kv_cache_greedy(const Tensor& keys,
+                                                 const Tensor& values,
+                                                 int32_t num_kv_heads,
+                                                 int32_t head_dim,
+                                                 const std::string& cache_prefix,
+                                                 const BuilderContext& ctx) {
+    auto* op_ctx = keys.context();
+    auto batch = pipeline_shape::dim(keys, 0);
+    auto kv_heads = pipeline_ops::const_vec(op_ctx, std::vector<int64_t>{static_cast<int64_t>(num_kv_heads)});
+    auto zero_len = pipeline_ops::const_vec(op_ctx, std::vector<int64_t>{0});
+    auto head_dim_vec = pipeline_ops::const_vec(op_ctx, std::vector<int64_t>{static_cast<int64_t>(head_dim)});
+    auto cache_shape = pipeline_shape::make({batch, kv_heads, zero_len, head_dim_vec});
+
+    auto zero = Tensor(pipeline_ops::const_scalar(op_ctx, 0.0f), op_ctx).to(keys.dtype());
+    auto k_init = pipeline_shape::broadcast_to(zero, cache_shape);
+    auto v_init = pipeline_shape::broadcast_to(zero, cache_shape);
+
+    std::string k_name, v_name;
+    int layer_idx = extract_layer_index(cache_prefix);
+    if (layer_idx >= 0) {
+        const std::string k_type = "key";
+        const std::string v_type = "value";
+        k_name = "past_key_values." + std::to_string(layer_idx) + "." + k_type +
+                 "present." + std::to_string(layer_idx) + "." + k_type;
+        v_name = "past_key_values." + std::to_string(layer_idx) + "." + v_type +
+                 "present." + std::to_string(layer_idx) + "." + v_type;
+    } else {
+        k_name = cache_prefix + ".key_cache";
+        v_name = cache_prefix + ".value_cache";
+    }
+
+    ov::PartialShape var_shape{-1, num_kv_heads, -1, head_dim};
+    ov::op::util::VariableInfo k_info{var_shape, keys.dtype(), k_name};
+    auto k_var = std::make_shared<ov::op::util::Variable>(k_info);
+    auto k_read = std::make_shared<ov::op::v6::ReadValue>(k_init.output(), k_var);
+
+    ov::op::util::VariableInfo v_info{var_shape, values.dtype(), v_name};
+    auto v_var = std::make_shared<ov::op::util::Variable>(v_info);
+    auto v_read = std::make_shared<ov::op::v6::ReadValue>(v_init.output(), v_var);
+
+    // No Gather — directly concat cached with new tokens
+    auto k_combined = pipeline_ops::concat({Tensor(k_read->output(0), op_ctx), keys}, 2);
+    auto v_combined = pipeline_ops::concat({Tensor(v_read->output(0), op_ctx), values}, 2);
+
+    auto k_assign = std::make_shared<ov::opset13::Assign>(k_combined.output(), k_var);
+    auto v_assign = std::make_shared<ov::opset13::Assign>(v_combined.output(), v_var);
+    ctx.register_sink(k_assign);
+    ctx.register_sink(v_assign);
+
+    return {k_combined, v_combined};
+}
 
 }  // namespace
 
@@ -98,7 +169,6 @@ const Tensor* Qwen25Attention::v_proj_bias() const {
 }
 
 Tensor Qwen25Attention::forward(const Tensor& hidden_states,
-                                const Tensor& beam_idx,
                                 const Tensor& rope_cos,
                                 const Tensor& rope_sin,
                                 const Tensor* causal_mask) const {
@@ -129,10 +199,10 @@ Tensor Qwen25Attention::forward(const Tensor& hidden_states,
     q_heads = ops::llm::apply_rope(q_heads, rope_cos, rope_sin, head_dim_, policy);
     k_heads = ops::llm::apply_rope(k_heads, rope_cos, rope_sin, head_dim_, policy);
 
-    // KV Cache
+    // KV Cache (greedy — no beam_idx Gather, enables GPU KVCache+SDPA fusion)
     const std::string cache_prefix = full_path().empty() ? name() : full_path();
-    auto cached = modeling::ops::append_kv_cache(k_heads, v_heads, beam_idx,
-                                                  num_kv_heads_, head_dim_, cache_prefix, ctx());
+    auto cached = append_kv_cache_greedy(k_heads, v_heads,
+                                         num_kv_heads_, head_dim_, cache_prefix, ctx());
 
     // GQA expansion
     auto k_expanded = ops::llm::repeat_kv(cached.first, num_heads_, num_kv_heads_, head_dim_);
@@ -202,7 +272,6 @@ Qwen25DecoderLayer::Qwen25DecoderLayer(
 }
 
 Tensor Qwen25DecoderLayer::forward(const Tensor& hidden_states,
-                                   const Tensor& beam_idx,
                                    const Tensor& rope_cos,
                                    const Tensor& rope_sin,
                                    const Tensor* causal_mask) const {
@@ -210,7 +279,7 @@ Tensor Qwen25DecoderLayer::forward(const Tensor& hidden_states,
     auto normed = input_layernorm_.forward(hidden_states);
 
     // Self-attention + residual
-    auto attn_out = self_attn_.forward(normed, beam_idx, rope_cos, rope_sin, causal_mask);
+    auto attn_out = self_attn_.forward(normed, rope_cos, rope_sin, causal_mask);
     auto residual = hidden_states + attn_out;
 
     // Post-attention norm + MLP + residual
@@ -248,7 +317,6 @@ Qwen25Model::Qwen25Model(BuilderContext& ctx, const Qwen25Config& cfg, Module* p
 
 Tensor Qwen25Model::forward(const Tensor& input_ids,
                             const Tensor& position_ids,
-                            const Tensor& beam_idx,
                             const Tensor& attention_mask) {
     auto hidden_states = embed_tokens_.forward(input_ids);
 
@@ -265,7 +333,7 @@ Tensor Qwen25Model::forward(const Tensor& input_ids,
 
     // Pass through decoder layers
     for (auto& layer : layers_) {
-        hidden_states = layer.forward(hidden_states, beam_idx, cos_sin.first, cos_sin.second, &causal_mask);
+        hidden_states = layer.forward(hidden_states, cos_sin.first, cos_sin.second, &causal_mask);
     }
 
     // Final RMSNorm
@@ -292,9 +360,8 @@ Qwen25ForCausalLM::Qwen25ForCausalLM(BuilderContext& ctx, const Qwen25Config& cf
 
 Tensor Qwen25ForCausalLM::forward(const Tensor& input_ids,
                                   const Tensor& position_ids,
-                                  const Tensor& beam_idx,
                                   const Tensor& attention_mask) {
-    auto hidden = model_.forward(input_ids, position_ids, beam_idx, attention_mask);
+    auto hidden = model_.forward(input_ids, position_ids, attention_mask);
     return lm_head_.forward(hidden);
 }
 
@@ -324,10 +391,9 @@ std::shared_ptr<ov::Model> create_qwen25_model(const Qwen25Config& cfg,
     auto input_ids = ctx.parameter("input_ids", ov::element::i64, ov::PartialShape{-1, -1});
     auto attention_mask = ctx.parameter("attention_mask", ov::element::i64, ov::PartialShape{-1, -1});
     auto position_ids = ctx.parameter("position_ids", ov::element::i64, ov::PartialShape{-1, -1});
-    auto beam_idx = ctx.parameter("beam_idx", ov::element::i32, ov::PartialShape{-1});
 
     // Forward pass
-    auto logits = model.forward(input_ids, position_ids, beam_idx, attention_mask);
+    auto logits = model.forward(input_ids, position_ids, attention_mask);
 
     // Build ov::Model
     auto result = std::make_shared<ov::op::v0::Result>(logits.output());
