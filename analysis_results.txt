@@ -1,0 +1,99 @@
+Done. Analyzed 941 tensors.
+
+========================================================================================================================
+WEIGHT DISTRIBUTION SUMMARY
+========================================================================================================================
+Category                       # Shape Example                      Mean        Std    AbsMean        Min        Max    Skew    Kurt
+------------------------------------------------------------------------------------------------------------------------
+embed_tokens                   1 (248320, 2048)                -0.000068   0.012378   0.009767    -0.1289     0.1094   0.003    0.23
+layernorm                    136 (2048,)                        0.388986   0.162839   0.466416    -0.3879     0.9356  -0.994    5.89
+linear_attn.conv1d            30 (8192, 1, 4)                   0.000041   0.060692   0.025094    -0.8269     0.9209   0.112   29.34
+linear_attn.in_proj_a         30 (32, 2048)                     0.000010   0.019059   0.013916    -0.1712     0.1672  -0.067    3.61
+linear_attn.in_proj_b         30 (32, 2048)                    -0.000032   0.014262   0.010118    -0.1454     0.1401  -0.135    5.48
+linear_attn.in_proj_qkv       30 (8192, 2048)                  -0.000000   0.018610   0.014132    -0.3654     0.3729   0.001    2.12
+linear_attn.in_proj_z         30 (4096, 2048)                   0.000030   0.015178   0.011512    -0.3099     0.3009   0.010    2.01
+linear_attn.out_proj          30 (2048, 4096)                   0.000001   0.016299   0.012264    -0.6916     0.7356   0.004    6.33
+lm_head                        1 (248320, 2048)                -0.000104   0.018373   0.014409    -0.2090     0.1787  -0.028    0.63
+mlp.experts.down              41 (256, 2048, 512)              -0.000001   0.010550   0.008295    -0.1476     0.1431   0.000    0.39
+mlp.experts.gate_up           41 (256, 1024, 2048)              0.000011   0.010719   0.008444    -0.1357     0.1357   0.001    0.36
+mlp.router_gate               41 (256, 2048)                    0.000174   0.016592   0.011107    -0.3044     0.2940   0.298   14.48
+self_attn.k_proj              11 (512, 2048)                   -0.000010   0.016708   0.012434    -0.2182     0.2037  -0.002    2.66
+self_attn.o_proj              11 (2048, 4096)                  -0.000002   0.015902   0.012043    -0.6238     0.5684   0.001    4.63
+self_attn.q_proj              11 (8192, 2048)                   0.000020   0.016538   0.012449    -0.3167     0.3313   0.010    2.37
+self_attn.v_proj              11 (512, 2048)                   -0.000004   0.014615   0.010758    -0.2229     0.2435   0.004    4.40
+shared_expert.down            41 (2048, 512)                    0.000000   0.010394   0.007698    -0.3359     0.4145   0.033   13.25
+shared_expert.gate            41 (512, 2048)                   -0.000010   0.009786   0.007259    -0.1819     0.1787  -0.016    6.01
+shared_expert.up              41 (512, 2048)                    0.000003   0.010998   0.008266    -0.1629     0.1741   0.003    2.61
+visual                       333 (4304, 1152)                   0.265439   0.370605   0.666036    -2.7739     2.7743  -0.908   60.96
+
+
+========================================================================================================================
+QUANTIZATION FRIENDLINESS ANALYSIS
+========================================================================================================================
+
+Category                      RowRangeCV  ColRangeCV  Row<Col?  |Mean|/Std  MinMaxSym Quant Rec                          
+------------------------------------------------------------------------------------------------------------------------
+linear_attn.in_proj_a             0.2719      0.3154       Yes     0.00051     0.0234 row~col, sym                       
+linear_attn.in_proj_b             0.2914      0.4014       Yes     0.00223     0.0367 per-row, sym                       
+linear_attn.in_proj_qkv           0.3053      0.2600        No     0.00001     0.0199 row~col, sym                       
+linear_attn.in_proj_z             0.3380      0.2665        No     0.00198     0.0290 per-col, sym                       
+linear_attn.out_proj              0.3821      0.3679        No     0.00007     0.0598 row~col, sym                       
+mlp.experts.down                  0.1527      0.1755       Yes     0.00007     0.0304 row~col, sym                       
+mlp.experts.gate_up               0.1717      0.1243        No     0.00103     0.0004 per-col, sym                       
+self_attn.k_proj                  0.4252      0.2612        No     0.00058     0.0667 per-col, sym                       
+self_attn.o_proj                  0.4106      0.5742       Yes     0.00011     0.0888 per-row, sym                       
+self_attn.q_proj                  0.5610      0.1666        No     0.00124     0.0442 per-col, sym                       
+self_attn.v_proj                  0.2234      0.1741        No     0.00026     0.0846 per-col, sym                       
+shared_expert.down                0.3704      0.4375       Yes     0.00000     0.1896 row~col, sym(~)                    
+shared_expert.gate                0.4181      0.3823        No     0.00105     0.0172 row~col, sym                       
+shared_expert.up                  0.2653      0.2836       Yes     0.00028     0.0641 row~col, sym                       
+visual                            0.2086      0.2331       Yes     0.71623     0.0001 row~col, asym                      
+
+
+========================================================================================================================
+OUTLIER ANALYSIS (Max/Std ratio — lower is better for quantization)
+========================================================================================================================
+
+Category                      Avg Max/Std  Worst Max/Std  Median Max/Std Outlier Level  
+------------------------------------------------------------------------------------------
+embed_tokens                        10.41          10.41           10.41 High           
+layernorm                            7.41          20.79            6.08 Moderate       
+linear_attn.conv1d                  17.25          38.36           14.02 High           
+linear_attn.in_proj_a                9.53          13.45            9.68 Moderate       
+linear_attn.in_proj_b               10.64          14.48           10.52 High           
+linear_attn.in_proj_qkv             21.07          33.68           20.08 Very High (!)  
+linear_attn.in_proj_z               21.52          28.36           21.54 Very High (!)  
+linear_attn.out_proj                48.72         124.66           47.88 Very High (!)  
+lm_head                             11.37          11.37           11.37 High           
+mlp.experts.down                    15.53          38.93           13.18 High           
+mlp.experts.gate_up                 13.87          23.50           13.73 High           
+mlp.router_gate                     19.58          27.37           19.76 High           
+self_attn.k_proj                    14.05          18.75           13.37 High           
+self_attn.o_proj                    47.48          98.33           43.50 Very High (!)  
+self_attn.q_proj                    21.52          27.64           20.91 Very High (!)  
+self_attn.v_proj                    16.93          28.42           17.48 High           
+shared_expert.down                  43.11          81.88           41.54 Very High (!)  
+shared_expert.gate                  19.96          29.86           18.94 High           
+shared_expert.up                    17.94          30.09           16.46 High           
+visual                              14.39          85.18           12.77 High           
+
+
+========================================================================================================================
+SUMMARY & RECOMMENDATIONS
+========================================================================================================================
+
+1. Zero-centered: Overall |mean|/std = 0.00329
+   => Weights are WELL zero-centered. Symmetric quantization is appropriate.
+
+2. Per-row vs Per-col: Avg RowRangeCV=0.2326, ColRangeCV=0.2395
+   => Row and column granularity are similar. Either works; per-channel is standard for weights.
+
+3. Outlier severity: Avg Max/Std = 21.87
+   => Significant outliers. Recommend SmoothQuant, AWQ, or GPTQ with group size.
+
+4. Architecture notes:
+   - Hybrid model: self-attention + linear attention (Mamba-like) + MoE
+   - MoE experts are 3D tensors [num_experts, hidden, intermediate]
+   - Linear attention has conv1d, A_log, dt_bias (special handling needed)
+   - No bias terms in language model linear layers (only in visual encoder)
+

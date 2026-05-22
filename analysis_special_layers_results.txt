@@ -1,0 +1,2445 @@
+Found 43 target tensors
+  embed_tokens: 1
+  lm_head: 1
+  router_gate: 41
+
+####################################################################################################
+# DETAILED ANALYSIS: embed_tokens, lm_head, router_gate
+####################################################################################################
+
+Loading model-00001-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.embed_tokens.weight
+  Shape: (248320, 2048), Dtype: torch.bfloat16, Size: 508,559,360 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00007247
+    Std:      0.01237571
+    |Mean|/Std: 0.005856  (well centered)
+    Min:      -0.296875
+    Max:      0.255859
+    AbsMean:  0.00976444
+
+  Distribution Shape:
+    Skewness: 0.0025  (symmetric)
+    Kurtosis: 0.2378  (Gaussian-like)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0400  -0.0294  -0.0204  -0.0082  -0.0001   0.0081   0.0203   0.0294   0.0400
+
+  Outlier Analysis:
+    Max|val|:    0.296875
+    Max/Std:     23.99x
+    P99.9/Std:   3.47x
+    P99/Std:     2.64x
+    Max/P99.9:   6.91x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0001%
+    Near-zero (<0.01*std): 0.84%
+
+  Per-Row (output channel) Analysis [248320 rows]:
+    Row means:  min=-0.001506, max=0.001273, std=0.000265
+    Row stds:   min=0.000010, max=0.017365, std=0.001710
+    Row ranges: min=0.0000, max=0.4180, CV=0.1717
+    Row absmax: min=0.0000, max=0.2969, CV=0.1911
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.006835, max=0.013037, std=0.001897
+    Col stds:   min=0.011245, max=0.016412, std=0.000425
+    Col ranges: min=0.1057, max=0.3523, CV=0.1171
+    Col absmax: min=0.0544, max=0.2969, CV=0.1886
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00058438  (relative: 5.985%)
+    Per-row:     0.00014330  (relative: 1.468%)
+    Per-col:     0.00012750  (relative: 1.306%)
+    Winner:      per-col (12.4% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00058438  (relative: 5.985%)
+    Asymmetric MAE:  0.00054175  (relative: 5.548%)
+    Winner:          asymmetric (7.9% better)
+
+Loading model-00002-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.0.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00010678
+    Std:      0.02336553
+    |Mean|/Std: 0.004570  (well centered)
+    Min:      -0.275391
+    Max:      0.296875
+    AbsMean:  0.01772752
+
+  Distribution Shape:
+    Skewness: 0.0624  (symmetric)
+    Kurtosis: 3.7293  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1045  -0.0566  -0.0366  -0.0145  -0.0001   0.0142   0.0361   0.0566   0.1084
+
+  Outlier Analysis:
+    Max|val|:    0.296875
+    Max/Std:     12.71x
+    P99.9/Std:   5.52x
+    P99/Std:     2.88x
+    Max/P99.9:   2.30x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 0.89%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.001480, max=0.001234, std=0.000446
+    Row stds:   min=0.017889, max=0.033313, std=0.002141
+    Row ranges: min=0.1367, max=0.5176, CV=0.2531
+    Row absmax: min=0.0713, max=0.2969, CV=0.2772
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.075168, max=0.077145, std=0.014079
+    Col stds:   min=0.006039, max=0.067626, std=0.004395
+    Col ranges: min=0.0339, max=0.3345, CV=0.2577
+    Col absmax: min=0.0334, max=0.2969, CV=0.3455
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00058460  (relative: 3.298%)
+    Per-row:     0.00031404  (relative: 1.771%)
+    Per-col:     0.00013281  (relative: 0.749%)
+    Winner:      per-col (136.5% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00058460  (relative: 3.298%)
+    Asymmetric MAE:  0.00056065  (relative: 3.163%)
+    Winner:          asymmetric (4.3% better)
+
+====================================================================================================
+  model.language_model.layers.1.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00049336
+    Std:      0.02413036
+    |Mean|/Std: 0.020446  (biased!)
+    Min:      -0.359375
+    Max:      0.337891
+    AbsMean:  0.01802335
+
+  Distribution Shape:
+    Skewness: -0.0546  (symmetric)
+    Kurtosis: 4.2973  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1113  -0.0623  -0.0383  -0.0146  -0.0004   0.0138   0.0369   0.0596   0.1064
+
+  Outlier Analysis:
+    Max|val|:    0.359375
+    Max/Std:     14.89x
+    P99.9/Std:   5.46x
+    P99/Std:     3.02x
+    Max/P99.9:   2.73x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 0.92%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.001612, max=0.000367, std=0.000378
+    Row stds:   min=0.018603, max=0.030397, std=0.002508
+    Row ranges: min=0.1748, max=0.5898, CV=0.2631
+    Row absmax: min=0.0918, max=0.3594, CV=0.2966
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.090313, max=0.081119, std=0.016143
+    Col stds:   min=0.007718, max=0.075058, std=0.004567
+    Col ranges: min=0.0433, max=0.3810, CV=0.2868
+    Col absmax: min=0.0242, max=0.3594, CV=0.4071
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00070788  (relative: 3.928%)
+    Per-row:     0.00033485  (relative: 1.858%)
+    Per-col:     0.00012949  (relative: 0.718%)
+    Winner:      per-col (158.6% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00070788  (relative: 3.928%)
+    Asymmetric MAE:  0.00068398  (relative: 3.795%)
+    Winner:          asymmetric (3.5% better)
+
+Loading model-00003-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.2.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00015305
+    Std:      0.02645660
+    |Mean|/Std: 0.005785  (well centered)
+    Min:      -0.404297
+    Max:      0.386719
+    AbsMean:  0.01986751
+
+  Distribution Shape:
+    Skewness: -0.0456  (symmetric)
+    Kurtosis: 3.7663  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1118  -0.0679  -0.0420  -0.0157  -0.0001   0.0155   0.0415   0.0669   0.1094
+
+  Outlier Analysis:
+    Max|val|:    0.404297
+    Max/Std:     15.28x
+    P99.9/Std:   4.86x
+    P99/Std:     3.01x
+    Max/P99.9:   3.14x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 0.91%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.001017, max=0.000803, std=0.000376
+    Row stds:   min=0.021144, max=0.032842, std=0.002087
+    Row ranges: min=0.1831, max=0.6445, CV=0.3479
+    Row absmax: min=0.0933, max=0.4043, CV=0.4106
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.095168, max=0.099316, std=0.016725
+    Col stds:   min=0.004144, max=0.086999, std=0.005027
+    Col ranges: min=0.0245, max=0.4536, CV=0.2781
+    Col absmax: min=0.0242, max=0.4043, CV=0.3999
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00079716  (relative: 4.012%)
+    Per-row:     0.00030944  (relative: 1.558%)
+    Per-col:     0.00014001  (relative: 0.705%)
+    Winner:      per-col (121.0% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00079716  (relative: 4.012%)
+    Asymmetric MAE:  0.00077589  (relative: 3.905%)
+    Winner:          asymmetric (2.7% better)
+
+====================================================================================================
+  model.language_model.layers.3.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00022733
+    Std:      0.02404579
+    |Mean|/Std: 0.009454  (well centered)
+    Min:      -0.345703
+    Max:      0.302734
+    AbsMean:  0.01759676
+
+  Distribution Shape:
+    Skewness: 0.0920  (symmetric)
+    Kurtosis: 5.2616  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1060  -0.0620  -0.0371  -0.0132   0.0002   0.0136   0.0376   0.0635   0.1177
+
+  Outlier Analysis:
+    Max|val|:    0.345703
+    Max/Std:     14.38x
+    P99.9/Std:   5.56x
+    P99/Std:     3.15x
+    Max/P99.9:   2.58x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.01%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000808, max=0.001197, std=0.000336
+    Row stds:   min=0.016969, max=0.029969, std=0.002754
+    Row ranges: min=0.1836, max=0.6211, CV=0.2879
+    Row absmax: min=0.0938, max=0.3457, CV=0.3410
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.089102, max=0.088375, std=0.015652
+    Col stds:   min=0.004137, max=0.084244, std=0.005006
+    Col ranges: min=0.0258, max=0.3948, CV=0.2992
+    Col absmax: min=0.0238, max=0.3457, CV=0.4131
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00068029  (relative: 3.866%)
+    Per-row:     0.00032951  (relative: 1.873%)
+    Per-col:     0.00012961  (relative: 0.737%)
+    Winner:      per-col (154.2% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00068029  (relative: 3.866%)
+    Asymmetric MAE:  0.00063575  (relative: 3.613%)
+    Winner:          asymmetric (7.0% better)
+
+Loading model-00004-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.4.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00004528
+    Std:      0.02290924
+    |Mean|/Std: 0.001976  (well centered)
+    Min:      -0.351562
+    Max:      0.289062
+    AbsMean:  0.01653532
+
+  Distribution Shape:
+    Skewness: 0.0387  (symmetric)
+    Kurtosis: 6.5739  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1113  -0.0598  -0.0349  -0.0126  -0.0000   0.0125   0.0349   0.0593   0.1180
+
+  Outlier Analysis:
+    Max|val|:    0.351562
+    Max/Std:     15.35x
+    P99.9/Std:   6.05x
+    P99/Std:     3.22x
+    Max/P99.9:   2.54x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.02%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.001090, max=0.000869, std=0.000356
+    Row stds:   min=0.015875, max=0.029800, std=0.002912
+    Row ranges: min=0.1855, max=0.5586, CV=0.2641
+    Row absmax: min=0.0952, max=0.3516, CV=0.3080
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.096811, max=0.083331, std=0.014485
+    Col stds:   min=0.006505, max=0.080942, std=0.004759
+    Col ranges: min=0.0399, max=0.3911, CV=0.2894
+    Col absmax: min=0.0260, max=0.3516, CV=0.4211
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00069219  (relative: 4.186%)
+    Per-row:     0.00033434  (relative: 2.022%)
+    Per-col:     0.00012827  (relative: 0.776%)
+    Winner:      per-col (160.7% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00069219  (relative: 4.186%)
+    Asymmetric MAE:  0.00062751  (relative: 3.795%)
+    Winner:          asymmetric (10.3% better)
+
+====================================================================================================
+  model.language_model.layers.5.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00002006
+    Std:      0.02220276
+    |Mean|/Std: 0.000903  (well centered)
+    Min:      -0.341797
+    Max:      0.341797
+    AbsMean:  0.01571351
+
+  Distribution Shape:
+    Skewness: 0.1078  (skewed!)
+    Kurtosis: 8.3022  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1162  -0.0596  -0.0332  -0.0117   0.0001   0.0118   0.0327   0.0571   0.1250
+
+  Outlier Analysis:
+    Max|val|:    0.341797
+    Max/Std:     15.39x
+    P99.9/Std:   6.42x
+    P99/Std:     3.36x
+    Max/P99.9:   2.40x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.03%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.001260, max=0.000932, std=0.000341
+    Row stds:   min=0.015755, max=0.029341, std=0.002828
+    Row ranges: min=0.1807, max=0.5713, CV=0.2234
+    Row absmax: min=0.0967, max=0.3418, CV=0.2583
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.093416, max=0.090566, std=0.013870
+    Col stds:   min=0.007546, max=0.075088, std=0.005000
+    Col ranges: min=0.0416, max=0.3931, CV=0.3153
+    Col absmax: min=0.0216, max=0.3418, CV=0.4557
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00067299  (relative: 4.283%)
+    Per-row:     0.00035579  (relative: 2.264%)
+    Per-col:     0.00012395  (relative: 0.789%)
+    Winner:      per-col (187.0% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00067299  (relative: 4.283%)
+    Asymmetric MAE:  0.00067056  (relative: 4.267%)
+    Winner:          asymmetric (0.4% better)
+
+Loading model-00005-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.6.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00000324
+    Std:      0.02145501
+    |Mean|/Std: 0.000151  (well centered)
+    Min:      -0.332031
+    Max:      0.341797
+    AbsMean:  0.01484584
+
+  Distribution Shape:
+    Skewness: 0.1321  (skewed!)
+    Kurtosis: 10.1562  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1167  -0.0593  -0.0312  -0.0108   0.0000   0.0109   0.0309   0.0569   0.1279
+
+  Outlier Analysis:
+    Max|val|:    0.341797
+    Max/Std:     15.93x
+    P99.9/Std:   6.78x
+    P99/Std:     3.48x
+    Max/P99.9:   2.35x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.09%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000977, max=0.001262, std=0.000352
+    Row stds:   min=0.015076, max=0.028502, std=0.002761
+    Row ranges: min=0.1841, max=0.5938, CV=0.2113
+    Row absmax: min=0.1016, max=0.3418, CV=0.2412
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.086960, max=0.092351, std=0.013516
+    Col stds:   min=0.007851, max=0.078196, std=0.005335
+    Col ranges: min=0.0491, max=0.3877, CV=0.3454
+    Col absmax: min=0.0278, max=0.3418, CV=0.4813
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00067225  (relative: 4.528%)
+    Per-row:     0.00036501  (relative: 2.459%)
+    Per-col:     0.00011996  (relative: 0.808%)
+    Winner:      per-col (204.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00067225  (relative: 4.528%)
+    Asymmetric MAE:  0.00066066  (relative: 4.450%)
+    Winner:          asymmetric (1.8% better)
+
+====================================================================================================
+  model.language_model.layers.7.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00009667
+    Std:      0.01998553
+    |Mean|/Std: 0.004837  (well centered)
+    Min:      -0.347656
+    Max:      0.382812
+    AbsMean:  0.01381788
+
+  Distribution Shape:
+    Skewness: 0.1812  (skewed!)
+    Kurtosis: 10.5878  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1094  -0.0554  -0.0288  -0.0103  -0.0001   0.0101   0.0287   0.0527   0.1226
+
+  Outlier Analysis:
+    Max|val|:    0.382812
+    Max/Std:     19.15x
+    P99.9/Std:   6.89x
+    P99/Std:     3.52x
+    Max/P99.9:   2.78x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.09%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000922, max=0.000869, std=0.000330
+    Row stds:   min=0.015192, max=0.025536, std=0.002593
+    Row ranges: min=0.1934, max=0.5820, CV=0.2066
+    Row absmax: min=0.0977, max=0.3828, CV=0.2488
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.084210, max=0.092903, std=0.013022
+    Col stds:   min=0.006427, max=0.068735, std=0.004636
+    Col ranges: min=0.0403, max=0.4099, CV=0.3436
+    Col absmax: min=0.0221, max=0.3828, CV=0.4927
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00075301  (relative: 5.450%)
+    Per-row:     0.00033720  (relative: 2.440%)
+    Per-col:     0.00011191  (relative: 0.810%)
+    Winner:      per-col (201.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00075301  (relative: 5.450%)
+    Asymmetric MAE:  0.00071627  (relative: 5.184%)
+    Winner:          asymmetric (5.1% better)
+
+Loading model-00007-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.10.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00016719
+    Std:      0.01975963
+    |Mean|/Std: 0.008461  (well centered)
+    Min:      -0.275391
+    Max:      0.326172
+    AbsMean:  0.01331457
+
+  Distribution Shape:
+    Skewness: 0.1440  (skewed!)
+    Kurtosis: 11.8896  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1128  -0.0564  -0.0283  -0.0096  -0.0002   0.0093   0.0280   0.0557   0.1175
+
+  Outlier Analysis:
+    Max|val|:    0.326172
+    Max/Std:     16.51x
+    P99.9/Std:   6.92x
+    P99/Std:     3.61x
+    Max/P99.9:   2.39x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.19%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.001077, max=0.000769, std=0.000325
+    Row stds:   min=0.014043, max=0.025081, std=0.002911
+    Row ranges: min=0.1782, max=0.5137, CV=0.2367
+    Row absmax: min=0.0903, max=0.3262, CV=0.2786
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.081793, max=0.084687, std=0.012195
+    Col stds:   min=0.007975, max=0.063328, std=0.005609
+    Col ranges: min=0.0493, max=0.3237, CV=0.3991
+    Col absmax: min=0.0271, max=0.3262, CV=0.5136
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00064203  (relative: 4.822%)
+    Per-row:     0.00034189  (relative: 2.568%)
+    Per-col:     0.00011306  (relative: 0.849%)
+    Winner:      per-col (202.4% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00064203  (relative: 4.822%)
+    Asymmetric MAE:  0.00058958  (relative: 4.428%)
+    Winner:          asymmetric (8.9% better)
+
+====================================================================================================
+  model.language_model.layers.8.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00010234
+    Std:      0.01867697
+    |Mean|/Std: 0.005479  (well centered)
+    Min:      -0.328125
+    Max:      0.369141
+    AbsMean:  0.01286700
+
+  Distribution Shape:
+    Skewness: 0.2311  (skewed!)
+    Kurtosis: 11.2942  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1030  -0.0515  -0.0264  -0.0096  -0.0002   0.0093   0.0264   0.0505   0.1167
+
+  Outlier Analysis:
+    Max|val|:    0.369141
+    Max/Std:     19.76x
+    P99.9/Std:   6.95x
+    P99/Std:     3.58x
+    Max/P99.9:   2.84x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.07%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000732, max=0.000613, std=0.000269
+    Row stds:   min=0.015670, max=0.026215, std=0.002156
+    Row ranges: min=0.1719, max=0.5391, CV=0.2187
+    Row absmax: min=0.0913, max=0.3691, CV=0.2555
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.079867, max=0.093895, std=0.012928
+    Col stds:   min=0.005245, max=0.057821, std=0.004133
+    Col ranges: min=0.0339, max=0.4062, CV=0.3686
+    Col absmax: min=0.0194, max=0.3691, CV=0.5333
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00072725  (relative: 5.652%)
+    Per-row:     0.00031850  (relative: 2.475%)
+    Per-col:     0.00010119  (relative: 0.786%)
+    Winner:      per-col (214.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00072725  (relative: 5.652%)
+    Asymmetric MAE:  0.00068419  (relative: 5.317%)
+    Winner:          asymmetric (6.3% better)
+
+====================================================================================================
+  model.language_model.layers.9.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00012654
+    Std:      0.01825417
+    |Mean|/Std: 0.006932  (well centered)
+    Min:      -0.330078
+    Max:      0.332031
+    AbsMean:  0.01241786
+
+  Distribution Shape:
+    Skewness: 0.2259  (skewed!)
+    Kurtosis: 13.0189  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1035  -0.0505  -0.0258  -0.0092  -0.0002   0.0089   0.0255   0.0493   0.1152
+
+  Outlier Analysis:
+    Max|val|:    0.332031
+    Max/Std:     18.19x
+    P99.9/Std:   7.22x
+    P99/Std:     3.58x
+    Max/P99.9:   2.52x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.10%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000992, max=0.000813, std=0.000286
+    Row stds:   min=0.014136, max=0.025613, std=0.002339
+    Row ranges: min=0.1602, max=0.5273, CV=0.2278
+    Row absmax: min=0.0825, max=0.3320, CV=0.2675
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.076736, max=0.087336, std=0.012046
+    Col stds:   min=0.006476, max=0.056222, std=0.004539
+    Col ranges: min=0.0459, max=0.3801, CV=0.3659
+    Col absmax: min=0.0255, max=0.3320, CV=0.5080
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00065406  (relative: 5.267%)
+    Per-row:     0.00032701  (relative: 2.633%)
+    Per-col:     0.00010440  (relative: 0.841%)
+    Winner:      per-col (213.2% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00065406  (relative: 5.267%)
+    Asymmetric MAE:  0.00064940  (relative: 5.230%)
+    Winner:          asymmetric (0.7% better)
+
+Loading model-00009-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.11.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00001241
+    Std:      0.01940570
+    |Mean|/Std: 0.000639  (well centered)
+    Min:      -0.287109
+    Max:      0.326172
+    AbsMean:  0.01279904
+
+  Distribution Shape:
+    Skewness: 0.0953  (symmetric)
+    Kurtosis: 13.1082  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1157  -0.0559  -0.0271  -0.0089   0.0000   0.0089   0.0270   0.0554   0.1191
+
+  Outlier Analysis:
+    Max|val|:    0.326172
+    Max/Std:     16.81x
+    P99.9/Std:   7.20x
+    P99/Std:     3.72x
+    Max/P99.9:   2.34x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.22%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000915, max=0.001016, std=0.000298
+    Row stds:   min=0.013271, max=0.024922, std=0.002709
+    Row ranges: min=0.1807, max=0.5195, CV=0.2178
+    Row absmax: min=0.0962, max=0.3262, CV=0.2564
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.082042, max=0.086800, std=0.011992
+    Col stds:   min=0.008086, max=0.064572, std=0.005833
+    Col ranges: min=0.0472, max=0.3445, CV=0.4212
+    Col absmax: min=0.0254, max=0.3262, CV=0.5435
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00064147  (relative: 5.012%)
+    Per-row:     0.00034631  (relative: 2.706%)
+    Per-col:     0.00010922  (relative: 0.853%)
+    Winner:      per-col (217.1% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00064147  (relative: 5.012%)
+    Asymmetric MAE:  0.00060088  (relative: 4.695%)
+    Winner:          asymmetric (6.8% better)
+
+====================================================================================================
+  model.language_model.layers.12.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00004111
+    Std:      0.01899987
+    |Mean|/Std: 0.002164  (well centered)
+    Min:      -0.279297
+    Max:      0.314453
+    AbsMean:  0.01255618
+
+  Distribution Shape:
+    Skewness: 0.1321  (skewed!)
+    Kurtosis: 12.6814  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1131  -0.0547  -0.0261  -0.0088  -0.0000   0.0088   0.0262   0.0557   0.1157
+
+  Outlier Analysis:
+    Max|val|:    0.314453
+    Max/Std:     16.55x
+    P99.9/Std:   7.04x
+    P99/Std:     3.80x
+    Max/P99.9:   2.35x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.16%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000861, max=0.001350, std=0.000306
+    Row stds:   min=0.013838, max=0.024805, std=0.002814
+    Row ranges: min=0.1758, max=0.5508, CV=0.2197
+    Row absmax: min=0.0918, max=0.3145, CV=0.2561
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.085297, max=0.087456, std=0.012247
+    Col stds:   min=0.006737, max=0.052890, std=0.005290
+    Col ranges: min=0.0455, max=0.3579, CV=0.4288
+    Col absmax: min=0.0234, max=0.3145, CV=0.5496
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00061890  (relative: 4.929%)
+    Per-row:     0.00032821  (relative: 2.614%)
+    Per-col:     0.00010718  (relative: 0.854%)
+    Winner:      per-col (206.2% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00061890  (relative: 4.929%)
+    Asymmetric MAE:  0.00058239  (relative: 4.638%)
+    Winner:          asymmetric (6.3% better)
+
+====================================================================================================
+  model.language_model.layers.13.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00015210
+    Std:      0.01782383
+    |Mean|/Std: 0.008533  (well centered)
+    Min:      -0.287109
+    Max:      0.341797
+    AbsMean:  0.01152688
+
+  Distribution Shape:
+    Skewness: 0.1687  (skewed!)
+    Kurtosis: 14.7464  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1094  -0.0520  -0.0236  -0.0079   0.0001   0.0081   0.0242   0.0530   0.1133
+
+  Outlier Analysis:
+    Max|val|:    0.341797
+    Max/Std:     19.18x
+    P99.9/Std:   7.40x
+    P99/Std:     3.89x
+    Max/P99.9:   2.59x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.24%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000671, max=0.000999, std=0.000283
+    Row stds:   min=0.013176, max=0.024201, std=0.002622
+    Row ranges: min=0.1890, max=0.4844, CV=0.2058
+    Row absmax: min=0.0972, max=0.3418, CV=0.2523
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.082390, max=0.085375, std=0.011873
+    Col stds:   min=0.005748, max=0.049082, std=0.005038
+    Col ranges: min=0.0410, max=0.3505, CV=0.4537
+    Col absmax: min=0.0217, max=0.3418, CV=0.5932
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00067275  (relative: 5.836%)
+    Per-row:     0.00032060  (relative: 2.781%)
+    Per-col:     0.00009993  (relative: 0.867%)
+    Winner:      per-col (220.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00067275  (relative: 5.836%)
+    Asymmetric MAE:  0.00061568  (relative: 5.341%)
+    Winner:          asymmetric (9.3% better)
+
+Loading model-00011-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.14.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00015907
+    Std:      0.01818768
+    |Mean|/Std: 0.008746  (well centered)
+    Min:      -0.291016
+    Max:      0.320312
+    AbsMean:  0.01174013
+
+  Distribution Shape:
+    Skewness: 0.2502  (skewed!)
+    Kurtosis: 15.0341  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1128  -0.0522  -0.0239  -0.0081   0.0001   0.0082   0.0244   0.0547   0.1196
+
+  Outlier Analysis:
+    Max|val|:    0.320312
+    Max/Std:     17.61x
+    P99.9/Std:   7.36x
+    P99/Std:     3.89x
+    Max/P99.9:   2.39x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.24%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000622, max=0.001143, std=0.000291
+    Row stds:   min=0.013416, max=0.026501, std=0.002864
+    Row ranges: min=0.1890, max=0.4600, CV=0.1939
+    Row absmax: min=0.0981, max=0.3203, CV=0.2456
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.086233, max=0.090044, std=0.012215
+    Col stds:   min=0.007419, max=0.052237, std=0.005037
+    Col ranges: min=0.0409, max=0.3662, CV=0.5057
+    Col absmax: min=0.0210, max=0.3203, CV=0.6192
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00062997  (relative: 5.366%)
+    Per-row:     0.00032834  (relative: 2.797%)
+    Per-col:     0.00010582  (relative: 0.901%)
+    Winner:      per-col (210.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00062997  (relative: 5.366%)
+    Asymmetric MAE:  0.00059899  (relative: 5.102%)
+    Winner:          asymmetric (5.2% better)
+
+====================================================================================================
+  model.language_model.layers.15.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00015088
+    Std:      0.01747625
+    |Mean|/Std: 0.008634  (well centered)
+    Min:      -0.322266
+    Max:      0.300781
+    AbsMean:  0.01094648
+
+  Distribution Shape:
+    Skewness: 0.2647  (skewed!)
+    Kurtosis: 17.0811  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1099  -0.0515  -0.0225  -0.0072   0.0001   0.0074   0.0229   0.0537   0.1167
+
+  Outlier Analysis:
+    Max|val|:    0.322266
+    Max/Std:     18.44x
+    P99.9/Std:   7.58x
+    P99/Std:     4.02x
+    Max/P99.9:   2.43x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.35%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000659, max=0.001137, std=0.000273
+    Row stds:   min=0.012848, max=0.025148, std=0.002762
+    Row ranges: min=0.1963, max=0.5146, CV=0.1987
+    Row absmax: min=0.1006, max=0.3223, CV=0.2501
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.083816, max=0.088317, std=0.011783
+    Col stds:   min=0.005478, max=0.049844, std=0.005289
+    Col ranges: min=0.0358, max=0.3896, CV=0.4978
+    Col absmax: min=0.0182, max=0.3223, CV=0.6286
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00063473  (relative: 5.798%)
+    Per-row:     0.00032696  (relative: 2.987%)
+    Per-col:     0.00009982  (relative: 0.912%)
+    Winner:      per-col (227.5% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00063473  (relative: 5.798%)
+    Asymmetric MAE:  0.00061058  (relative: 5.578%)
+    Winner:          asymmetric (4.0% better)
+
+====================================================================================================
+  model.language_model.layers.16.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00026689
+    Std:      0.01765246
+    |Mean|/Std: 0.015119  (biased!)
+    Min:      -0.320312
+    Max:      0.337891
+    AbsMean:  0.01111441
+
+  Distribution Shape:
+    Skewness: 0.2266  (skewed!)
+    Kurtosis: 17.2079  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1118  -0.0518  -0.0225  -0.0073   0.0001   0.0077   0.0233   0.0542   0.1182
+
+  Outlier Analysis:
+    Max|val|:    0.337891
+    Max/Std:     19.14x
+    P99.9/Std:   7.69x
+    P99/Std:     4.01x
+    Max/P99.9:   2.49x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.34%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000473, max=0.001263, std=0.000278
+    Row stds:   min=0.012965, max=0.025682, std=0.002433
+    Row ranges: min=0.1885, max=0.5312, CV=0.2016
+    Row absmax: min=0.1011, max=0.3379, CV=0.2412
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.082057, max=0.090185, std=0.012134
+    Col stds:   min=0.006694, max=0.052263, std=0.005178
+    Col ranges: min=0.0337, max=0.3906, CV=0.4946
+    Col absmax: min=0.0195, max=0.3379, CV=0.6323
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00066490  (relative: 5.982%)
+    Per-row:     0.00033178  (relative: 2.985%)
+    Per-col:     0.00009765  (relative: 0.879%)
+    Winner:      per-col (239.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00066490  (relative: 5.982%)
+    Asymmetric MAE:  0.00064473  (relative: 5.801%)
+    Winner:          asymmetric (3.1% better)
+
+Loading model-00013-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.17.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00028787
+    Std:      0.01710113
+    |Mean|/Std: 0.016833  (biased!)
+    Min:      -0.330078
+    Max:      0.363281
+    AbsMean:  0.01065372
+
+  Distribution Shape:
+    Skewness: 0.3897  (skewed!)
+    Kurtosis: 19.1863  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1084  -0.0493  -0.0214  -0.0070   0.0001   0.0073   0.0223   0.0532   0.1191
+
+  Outlier Analysis:
+    Max|val|:    0.363281
+    Max/Std:     21.24x
+    P99.9/Std:   7.77x
+    P99/Std:     4.03x
+    Max/P99.9:   2.74x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.33%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000373, max=0.001006, std=0.000240
+    Row stds:   min=0.012855, max=0.023498, std=0.002149
+    Row ranges: min=0.1841, max=0.5938, CV=0.2154
+    Row absmax: min=0.1011, max=0.3633, CV=0.2548
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.084596, max=0.088548, std=0.011812
+    Col stds:   min=0.006641, max=0.052895, std=0.005101
+    Col ranges: min=0.0374, max=0.3760, CV=0.5040
+    Col absmax: min=0.0203, max=0.3633, CV=0.6385
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00071465  (relative: 6.708%)
+    Per-row:     0.00032831  (relative: 3.082%)
+    Per-col:     0.00009387  (relative: 0.881%)
+    Winner:      per-col (249.7% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00071465  (relative: 6.708%)
+    Asymmetric MAE:  0.00067969  (relative: 6.380%)
+    Winner:          asymmetric (5.1% better)
+
+====================================================================================================
+  model.language_model.layers.18.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00025343
+    Std:      0.01634028
+    |Mean|/Std: 0.015509  (biased!)
+    Min:      -0.292969
+    Max:      0.320312
+    AbsMean:  0.01024913
+
+  Distribution Shape:
+    Skewness: 0.4799  (skewed!)
+    Kurtosis: 19.8076  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1035  -0.0459  -0.0206  -0.0069   0.0001   0.0071   0.0212   0.0508   0.1143
+
+  Outlier Analysis:
+    Max|val|:    0.320312
+    Max/Std:     19.60x
+    P99.9/Std:   7.89x
+    P99/Std:     4.03x
+    Max/P99.9:   2.48x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.31%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000483, max=0.001148, std=0.000269
+    Row stds:   min=0.012910, max=0.021783, std=0.001925
+    Row ranges: min=0.1914, max=0.5225, CV=0.2062
+    Row absmax: min=0.0986, max=0.3203, CV=0.2498
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.079010, max=0.085388, std=0.011309
+    Col stds:   min=0.006388, max=0.053774, std=0.004931
+    Col ranges: min=0.0329, max=0.3547, CV=0.5004
+    Col absmax: min=0.0198, max=0.3203, CV=0.6463
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00063024  (relative: 6.149%)
+    Per-row:     0.00032260  (relative: 3.148%)
+    Per-col:     0.00008898  (relative: 0.868%)
+    Winner:      per-col (262.6% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00063024  (relative: 6.149%)
+    Asymmetric MAE:  0.00060070  (relative: 5.861%)
+    Winner:          asymmetric (4.9% better)
+
+====================================================================================================
+  model.language_model.layers.19.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00023396
+    Std:      0.01559621
+    |Mean|/Std: 0.015001  (biased!)
+    Min:      -0.314453
+    Max:      0.326172
+    AbsMean:  0.00970375
+
+  Distribution Shape:
+    Skewness: 0.4531  (skewed!)
+    Kurtosis: 20.9513  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0991  -0.0439  -0.0194  -0.0065   0.0001   0.0067   0.0200   0.0483   0.1108
+
+  Outlier Analysis:
+    Max|val|:    0.326172
+    Max/Std:     20.91x
+    P99.9/Std:   7.97x
+    P99/Std:     4.04x
+    Max/P99.9:   2.62x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.31%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000438, max=0.001107, std=0.000262
+    Row stds:   min=0.011663, max=0.022684, std=0.001822
+    Row ranges: min=0.1655, max=0.5371, CV=0.2116
+    Row absmax: min=0.0869, max=0.3262, CV=0.2510
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.075665, max=0.082608, std=0.010926
+    Col stds:   min=0.005696, max=0.049075, std=0.004804
+    Col ranges: min=0.0317, max=0.3438, CV=0.5229
+    Col absmax: min=0.0162, max=0.3262, CV=0.6626
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00064231  (relative: 6.619%)
+    Per-row:     0.00031103  (relative: 3.205%)
+    Per-col:     0.00008292  (relative: 0.855%)
+    Winner:      per-col (275.1% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00064231  (relative: 6.619%)
+    Asymmetric MAE:  0.00062850  (relative: 6.477%)
+    Winner:          asymmetric (2.2% better)
+
+Loading model-00015-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.20.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00016628
+    Std:      0.01548482
+    |Mean|/Std: 0.010738  (biased!)
+    Min:      -0.312500
+    Max:      0.318359
+    AbsMean:  0.01015816
+
+  Distribution Shape:
+    Skewness: 0.4149  (skewed!)
+    Kurtosis: 14.4294  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0898  -0.0435  -0.0205  -0.0071   0.0000   0.0072   0.0211   0.0469   0.1016
+
+  Outlier Analysis:
+    Max|val|:    0.318359
+    Max/Std:     20.56x
+    P99.9/Std:   7.16x
+    P99/Std:     3.91x
+    Max/P99.9:   2.87x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0004%
+    Near-zero (<0.01*std): 1.22%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000562, max=0.000837, std=0.000242
+    Row stds:   min=0.012307, max=0.023893, std=0.002217
+    Row ranges: min=0.1611, max=0.5879, CV=0.2139
+    Row absmax: min=0.0811, max=0.3184, CV=0.2626
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.076634, max=0.079784, std=0.010916
+    Col stds:   min=0.004207, max=0.041737, std=0.004107
+    Col ranges: min=0.0321, max=0.3442, CV=0.4735
+    Col absmax: min=0.0177, max=0.3184, CV=0.5990
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00062704  (relative: 6.173%)
+    Per-row:     0.00027305  (relative: 2.688%)
+    Per-col:     0.00008538  (relative: 0.841%)
+    Winner:      per-col (219.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00062704  (relative: 6.173%)
+    Asymmetric MAE:  0.00061867  (relative: 6.090%)
+    Winner:          asymmetric (1.4% better)
+
+====================================================================================================
+  model.language_model.layers.21.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00025339
+    Std:      0.01569952
+    |Mean|/Std: 0.016140  (biased!)
+    Min:      -0.245117
+    Max:      0.310547
+    AbsMean:  0.01010350
+
+  Distribution Shape:
+    Skewness: 0.4477  (skewed!)
+    Kurtosis: 15.6417  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0923  -0.0449  -0.0203  -0.0069   0.0001   0.0071   0.0210   0.0486   0.1060
+
+  Outlier Analysis:
+    Max|val|:    0.310547
+    Max/Std:     19.78x
+    P99.9/Std:   7.37x
+    P99/Std:     3.97x
+    Max/P99.9:   2.68x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.27%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000439, max=0.001175, std=0.000249
+    Row stds:   min=0.012261, max=0.022482, std=0.002259
+    Row ranges: min=0.1523, max=0.4453, CV=0.2085
+    Row absmax: min=0.0811, max=0.3105, CV=0.2541
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.076161, max=0.080578, std=0.010789
+    Col stds:   min=0.005590, max=0.045996, std=0.004492
+    Col ranges: min=0.0308, max=0.3530, CV=0.4978
+    Col absmax: min=0.0179, max=0.3105, CV=0.6025
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00061155  (relative: 6.053%)
+    Per-row:     0.00028391  (relative: 2.810%)
+    Per-col:     0.00008851  (relative: 0.876%)
+    Winner:      per-col (220.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00061155  (relative: 6.053%)
+    Asymmetric MAE:  0.00054492  (relative: 5.393%)
+    Winner:          asymmetric (12.2% better)
+
+====================================================================================================
+  model.language_model.layers.22.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00027196
+    Std:      0.01723968
+    |Mean|/Std: 0.015775  (biased!)
+    Min:      -0.378906
+    Max:      0.345703
+    AbsMean:  0.01113980
+
+  Distribution Shape:
+    Skewness: 0.3078  (skewed!)
+    Kurtosis: 15.4992  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0991  -0.0496  -0.0227  -0.0075   0.0001   0.0077   0.0237   0.0535   0.1104
+
+  Outlier Analysis:
+    Max|val|:    0.378906
+    Max/Std:     21.98x
+    P99.9/Std:   7.13x
+    P99/Std:     3.88x
+    Max/P99.9:   3.08x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.25%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000583, max=0.001223, std=0.000290
+    Row stds:   min=0.012552, max=0.024737, std=0.002435
+    Row ranges: min=0.1802, max=0.6260, CV=0.2509
+    Row absmax: min=0.0923, max=0.3789, CV=0.3104
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.080727, max=0.082057, std=0.011088
+    Col stds:   min=0.005962, max=0.056630, std=0.005317
+    Col ranges: min=0.0373, max=0.4570, CV=0.4845
+    Col absmax: min=0.0206, max=0.3789, CV=0.6004
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00074558  (relative: 6.693%)
+    Per-row:     0.00030945  (relative: 2.778%)
+    Per-col:     0.00009483  (relative: 0.851%)
+    Winner:      per-col (226.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00074558  (relative: 6.693%)
+    Asymmetric MAE:  0.00071034  (relative: 6.377%)
+    Winner:          asymmetric (5.0% better)
+
+Loading model-00017-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.23.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00025621
+    Std:      0.01720253
+    |Mean|/Std: 0.014894  (biased!)
+    Min:      -0.361328
+    Max:      0.335938
+    AbsMean:  0.01083632
+
+  Distribution Shape:
+    Skewness: 0.2829  (skewed!)
+    Kurtosis: 17.5408  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.1021  -0.0503  -0.0222  -0.0071   0.0001   0.0073   0.0233   0.0537   0.1128
+
+  Outlier Analysis:
+    Max|val|:    0.361328
+    Max/Std:     21.00x
+    P99.9/Std:   7.38x
+    P99/Std:     3.97x
+    Max/P99.9:   2.85x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.34%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000853, max=0.001196, std=0.000292
+    Row stds:   min=0.011961, max=0.024347, std=0.002424
+    Row ranges: min=0.1802, max=0.5898, CV=0.2500
+    Row absmax: min=0.0962, max=0.3613, CV=0.3028
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.078985, max=0.083624, std=0.011094
+    Col stds:   min=0.006311, max=0.063938, std=0.005606
+    Col ranges: min=0.0357, max=0.4070, CV=0.5102
+    Col absmax: min=0.0189, max=0.3613, CV=0.6337
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00071177  (relative: 6.568%)
+    Per-row:     0.00032212  (relative: 2.973%)
+    Per-col:     0.00009328  (relative: 0.861%)
+    Winner:      per-col (245.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00071177  (relative: 6.568%)
+    Asymmetric MAE:  0.00068386  (relative: 6.311%)
+    Winner:          asymmetric (4.1% better)
+
+====================================================================================================
+  model.language_model.layers.24.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00034638
+    Std:      0.01689196
+    |Mean|/Std: 0.020505  (biased!)
+    Min:      -0.337891
+    Max:      0.345703
+    AbsMean:  0.01072089
+
+  Distribution Shape:
+    Skewness: 0.3334  (skewed!)
+    Kurtosis: 17.1613  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0991  -0.0491  -0.0216  -0.0070   0.0001   0.0074   0.0229   0.0532   0.1094
+
+  Outlier Analysis:
+    Max|val|:    0.345703
+    Max/Std:     20.47x
+    P99.9/Std:   7.26x
+    P99/Std:     3.96x
+    Max/P99.9:   2.82x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.31%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000500, max=0.001453, std=0.000284
+    Row stds:   min=0.012969, max=0.021453, std=0.002268
+    Row ranges: min=0.1709, max=0.5586, CV=0.2471
+    Row absmax: min=0.0908, max=0.3457, CV=0.3137
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.076003, max=0.082170, std=0.011113
+    Col stds:   min=0.005839, max=0.056357, std=0.005229
+    Col ranges: min=0.0323, max=0.3918, CV=0.4986
+    Col absmax: min=0.0176, max=0.3457, CV=0.6239
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00067943  (relative: 6.337%)
+    Per-row:     0.00031040  (relative: 2.895%)
+    Per-col:     0.00009162  (relative: 0.855%)
+    Winner:      per-col (238.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00067943  (relative: 6.337%)
+    Asymmetric MAE:  0.00066904  (relative: 6.241%)
+    Winner:          asymmetric (1.6% better)
+
+====================================================================================================
+  model.language_model.layers.25.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00038439
+    Std:      0.01603143
+    |Mean|/Std: 0.023978  (biased!)
+    Min:      -0.373047
+    Max:      0.369141
+    AbsMean:  0.01009098
+
+  Distribution Shape:
+    Skewness: 0.3684  (skewed!)
+    Kurtosis: 18.9093  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0957  -0.0464  -0.0203  -0.0066   0.0002   0.0070   0.0215   0.0510   0.1079
+
+  Outlier Analysis:
+    Max|val|:    0.373047
+    Max/Std:     23.27x
+    P99.9/Std:   7.37x
+    P99/Std:     3.99x
+    Max/P99.9:   3.16x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.31%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000217, max=0.001170, std=0.000264
+    Row stds:   min=0.012113, max=0.021982, std=0.002273
+    Row ranges: min=0.1592, max=0.6270, CV=0.2526
+    Row absmax: min=0.0811, max=0.3730, CV=0.3120
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.076112, max=0.079697, std=0.010742
+    Col stds:   min=0.005357, max=0.055111, std=0.004931
+    Col ranges: min=0.0316, max=0.4390, CV=0.5066
+    Col absmax: min=0.0164, max=0.3730, CV=0.6429
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00073397  (relative: 7.274%)
+    Per-row:     0.00030199  (relative: 2.993%)
+    Per-col:     0.00008901  (relative: 0.882%)
+    Winner:      per-col (239.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00073397  (relative: 7.274%)
+    Asymmetric MAE:  0.00072697  (relative: 7.204%)
+    Winner:          asymmetric (1.0% better)
+
+Loading model-00019-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.26.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00043418
+    Std:      0.01612980
+    |Mean|/Std: 0.026918  (biased!)
+    Min:      -0.441406
+    Max:      0.355469
+    AbsMean:  0.01013378
+
+  Distribution Shape:
+    Skewness: 0.4666  (skewed!)
+    Kurtosis: 18.8352  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0977  -0.0464  -0.0200  -0.0066   0.0002   0.0071   0.0214   0.0518   0.1092
+
+  Outlier Analysis:
+    Max|val|:    0.441406
+    Max/Std:     27.37x
+    P99.9/Std:   7.54x
+    P99/Std:     4.06x
+    Max/P99.9:   3.63x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.31%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000267, max=0.001232, std=0.000254
+    Row stds:   min=0.012200, max=0.023300, std=0.002398
+    Row ranges: min=0.1704, max=0.6523, CV=0.2367
+    Row absmax: min=0.0879, max=0.4414, CV=0.3028
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.077179, max=0.081731, std=0.010977
+    Col stds:   min=0.005947, max=0.051925, std=0.004872
+    Col ranges: min=0.0297, max=0.4592, CV=0.5684
+    Col absmax: min=0.0177, max=0.4414, CV=0.6930
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00086919  (relative: 8.577%)
+    Per-row:     0.00030089  (relative: 2.969%)
+    Per-col:     0.00009278  (relative: 0.916%)
+    Winner:      per-col (224.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00086919  (relative: 8.577%)
+    Asymmetric MAE:  0.00078043  (relative: 7.701%)
+    Winner:          asymmetric (11.4% better)
+
+====================================================================================================
+  model.language_model.layers.27.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00034644
+    Std:      0.01514933
+    |Mean|/Std: 0.022869  (biased!)
+    Min:      -0.396484
+    Max:      0.330078
+    AbsMean:  0.00934166
+
+  Distribution Shape:
+    Skewness: 0.4671  (skewed!)
+    Kurtosis: 21.5906  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0923  -0.0435  -0.0187  -0.0060   0.0001   0.0063   0.0199   0.0491   0.1069
+
+  Outlier Analysis:
+    Max|val|:    0.396484
+    Max/Std:     26.17x
+    P99.9/Std:   7.70x
+    P99/Std:     4.06x
+    Max/P99.9:   3.40x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.36%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000335, max=0.001040, std=0.000243
+    Row stds:   min=0.011233, max=0.021329, std=0.002286
+    Row ranges: min=0.1558, max=0.5938, CV=0.2486
+    Row absmax: min=0.0864, max=0.3965, CV=0.3180
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.071481, max=0.077651, std=0.010364
+    Col stds:   min=0.005281, max=0.053038, std=0.004806
+    Col ranges: min=0.0292, max=0.4261, CV=0.5411
+    Col absmax: min=0.0157, max=0.3965, CV=0.6733
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00078138  (relative: 8.364%)
+    Per-row:     0.00029699  (relative: 3.179%)
+    Per-col:     0.00008361  (relative: 0.895%)
+    Winner:      per-col (255.2% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00078138  (relative: 8.364%)
+    Asymmetric MAE:  0.00071328  (relative: 7.635%)
+    Winner:          asymmetric (9.5% better)
+
+====================================================================================================
+  model.language_model.layers.28.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00040872
+    Std:      0.01490457
+    |Mean|/Std: 0.027423  (biased!)
+    Min:      -0.400391
+    Max:      0.292969
+    AbsMean:  0.00919288
+
+  Distribution Shape:
+    Skewness: 0.4116  (skewed!)
+    Kurtosis: 22.2049  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0917  -0.0417  -0.0182  -0.0059   0.0001   0.0063   0.0194   0.0486   0.1064
+
+  Outlier Analysis:
+    Max|val|:    0.400391
+    Max/Std:     26.86x
+    P99.9/Std:   7.83x
+    P99/Std:     4.08x
+    Max/P99.9:   3.43x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.37%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000391, max=0.001164, std=0.000243
+    Row stds:   min=0.011368, max=0.022225, std=0.001944
+    Row ranges: min=0.1582, max=0.5547, CV=0.2563
+    Row absmax: min=0.0820, max=0.4004, CV=0.3179
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.070321, max=0.076955, std=0.010425
+    Col stds:   min=0.005208, max=0.059393, std=0.004568
+    Col ranges: min=0.0279, max=0.4221, CV=0.5357
+    Col absmax: min=0.0150, max=0.4004, CV=0.6769
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00078855  (relative: 8.578%)
+    Per-row:     0.00029440  (relative: 3.203%)
+    Per-col:     0.00007995  (relative: 0.870%)
+    Winner:      per-col (268.2% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00078855  (relative: 8.578%)
+    Asymmetric MAE:  0.00067946  (relative: 7.391%)
+    Winner:          asymmetric (16.1% better)
+
+Loading model-00021-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.29.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00041943
+    Std:      0.01406935
+    |Mean|/Std: 0.029811  (biased!)
+    Min:      -0.361328
+    Max:      0.275391
+    AbsMean:  0.00873130
+
+  Distribution Shape:
+    Skewness: 0.5767  (skewed!)
+    Kurtosis: 20.7073  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0869  -0.0391  -0.0172  -0.0056   0.0002   0.0061   0.0184   0.0459   0.1001
+
+  Outlier Analysis:
+    Max|val|:    0.361328
+    Max/Std:     25.68x
+    P99.9/Std:   7.81x
+    P99/Std:     4.06x
+    Max/P99.9:   3.29x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.35%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000211, max=0.001143, std=0.000204
+    Row stds:   min=0.010305, max=0.020641, std=0.001809
+    Row ranges: min=0.1382, max=0.5293, CV=0.2411
+    Row absmax: min=0.0718, max=0.3613, CV=0.2903
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.068147, max=0.072475, std=0.009983
+    Col stds:   min=0.005250, max=0.048504, std=0.004091
+    Col ranges: min=0.0283, max=0.3979, CV=0.5143
+    Col absmax: min=0.0165, max=0.3613, CV=0.6565
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00071117  (relative: 8.145%)
+    Per-row:     0.00027390  (relative: 3.137%)
+    Per-col:     0.00007572  (relative: 0.867%)
+    Winner:      per-col (261.7% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00071117  (relative: 8.145%)
+    Asymmetric MAE:  0.00062504  (relative: 7.159%)
+    Winner:          asymmetric (13.8% better)
+
+====================================================================================================
+  model.language_model.layers.30.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00046923
+    Std:      0.01332524
+    |Mean|/Std: 0.035213  (biased!)
+    Min:      -0.304688
+    Max:      0.298828
+    AbsMean:  0.00838167
+
+  Distribution Shape:
+    Skewness: 0.5048  (skewed!)
+    Kurtosis: 20.1138  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0815  -0.0361  -0.0162  -0.0055   0.0002   0.0060   0.0176   0.0437   0.0928
+
+  Outlier Analysis:
+    Max|val|:    0.304688
+    Max/Std:     22.87x
+    P99.9/Std:   7.77x
+    P99/Std:     4.07x
+    Max/P99.9:   2.94x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.28%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000146, max=0.001034, std=0.000199
+    Row stds:   min=0.010653, max=0.019441, std=0.001623
+    Row ranges: min=0.1582, max=0.4600, CV=0.2360
+    Row absmax: min=0.0801, max=0.3047, CV=0.2901
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.064278, max=0.069684, std=0.009670
+    Col stds:   min=0.004717, max=0.049273, std=0.003774
+    Col ranges: min=0.0276, max=0.3433, CV=0.5003
+    Col absmax: min=0.0147, max=0.3047, CV=0.6394
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00060032  (relative: 7.162%)
+    Per-row:     0.00026078  (relative: 3.111%)
+    Per-col:     0.00007103  (relative: 0.847%)
+    Winner:      per-col (267.2% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00060032  (relative: 7.162%)
+    Asymmetric MAE:  0.00059237  (relative: 7.067%)
+    Winner:          asymmetric (1.3% better)
+
+====================================================================================================
+  model.language_model.layers.31.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00043427
+    Std:      0.01221748
+    |Mean|/Std: 0.035545  (biased!)
+    Min:      -0.285156
+    Max:      0.246094
+    AbsMean:  0.00765314
+
+  Distribution Shape:
+    Skewness: 0.4965  (skewed!)
+    Kurtosis: 20.9861  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0762  -0.0330  -0.0148  -0.0050   0.0002   0.0055   0.0162   0.0393   0.0850
+
+  Outlier Analysis:
+    Max|val|:    0.285156
+    Max/Std:     23.34x
+    P99.9/Std:   7.78x
+    P99/Std:     4.08x
+    Max/P99.9:   3.00x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.31%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000108, max=0.000885, std=0.000181
+    Row stds:   min=0.009450, max=0.016632, std=0.001496
+    Row ranges: min=0.1323, max=0.4131, CV=0.2449
+    Row absmax: min=0.0713, max=0.2852, CV=0.2951
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.057741, max=0.062402, std=0.009016
+    Col stds:   min=0.004321, max=0.043687, std=0.003414
+    Col ranges: min=0.0244, max=0.3014, CV=0.5162
+    Col absmax: min=0.0133, max=0.2852, CV=0.6505
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00056161  (relative: 7.338%)
+    Per-row:     0.00024066  (relative: 3.145%)
+    Per-col:     0.00006496  (relative: 0.849%)
+    Winner:      per-col (270.5% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00056161  (relative: 7.338%)
+    Asymmetric MAE:  0.00052063  (relative: 6.803%)
+    Winner:          asymmetric (7.9% better)
+
+Loading model-00022-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.32.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00044190
+    Std:      0.01187271
+    |Mean|/Std: 0.037220  (biased!)
+    Min:      -0.275391
+    Max:      0.209961
+    AbsMean:  0.00747188
+
+  Distribution Shape:
+    Skewness: 0.4628  (skewed!)
+    Kurtosis: 22.6129  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0747  -0.0312  -0.0143  -0.0049   0.0002   0.0054   0.0160   0.0376   0.0825
+
+  Outlier Analysis:
+    Max|val|:    0.275391
+    Max/Std:     23.20x
+    P99.9/Std:   7.86x
+    P99/Std:     3.97x
+    Max/P99.9:   2.95x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0004%
+    Near-zero (<0.01*std): 1.30%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000075, max=0.000992, std=0.000175
+    Row stds:   min=0.008846, max=0.016011, std=0.001396
+    Row ranges: min=0.1116, max=0.4072, CV=0.2487
+    Row absmax: min=0.0601, max=0.2754, CV=0.3000
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.060938, max=0.063401, std=0.008750
+    Col stds:   min=0.004415, max=0.051890, std=0.003480
+    Col ranges: min=0.0238, max=0.2946, CV=0.4857
+    Col absmax: min=0.0123, max=0.2754, CV=0.6162
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00054264  (relative: 7.262%)
+    Per-row:     0.00024686  (relative: 3.304%)
+    Per-col:     0.00006052  (relative: 0.810%)
+    Winner:      per-col (307.9% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00054264  (relative: 7.262%)
+    Asymmetric MAE:  0.00047523  (relative: 6.360%)
+    Winner:          asymmetric (14.2% better)
+
+====================================================================================================
+  model.language_model.layers.33.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00040318
+    Std:      0.01142707
+    |Mean|/Std: 0.035283  (biased!)
+    Min:      -0.219727
+    Max:      0.213867
+    AbsMean:  0.00735993
+
+  Distribution Shape:
+    Skewness: 0.5518  (skewed!)
+    Kurtosis: 20.4622  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0692  -0.0297  -0.0142  -0.0050   0.0002   0.0053   0.0157   0.0359   0.0767
+
+  Outlier Analysis:
+    Max|val|:    0.219727
+    Max/Std:     19.23x
+    P99.9/Std:   7.65x
+    P99/Std:     3.85x
+    Max/P99.9:   2.51x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.23%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000087, max=0.000921, std=0.000165
+    Row stds:   min=0.008725, max=0.015570, std=0.001281
+    Row ranges: min=0.1133, max=0.3857, CV=0.2551
+    Row absmax: min=0.0574, max=0.2197, CV=0.3049
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.058611, max=0.066097, std=0.008526
+    Col stds:   min=0.004142, max=0.051438, std=0.003247
+    Col ranges: min=0.0225, max=0.2522, CV=0.4709
+    Col absmax: min=0.0135, max=0.2197, CV=0.5963
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00043245  (relative: 5.876%)
+    Per-row:     0.00023515  (relative: 3.195%)
+    Per-col:     0.00005713  (relative: 0.776%)
+    Winner:      per-col (311.6% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00043245  (relative: 5.876%)
+    Asymmetric MAE:  0.00042483  (relative: 5.772%)
+    Winner:          asymmetric (1.8% better)
+
+Loading model-00023-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.34.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00037605
+    Std:      0.01113676
+    |Mean|/Std: 0.033767  (biased!)
+    Min:      -0.231445
+    Max:      0.204102
+    AbsMean:  0.00708337
+
+  Distribution Shape:
+    Skewness: 0.4850  (skewed!)
+    Kurtosis: 22.3878  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0693  -0.0291  -0.0136  -0.0048   0.0001   0.0051   0.0149   0.0356   0.0767
+
+  Outlier Analysis:
+    Max|val|:    0.231445
+    Max/Std:     20.78x
+    P99.9/Std:   7.85x
+    P99/Std:     3.95x
+    Max/P99.9:   2.65x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 1.26%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000064, max=0.000810, std=0.000148
+    Row stds:   min=0.008608, max=0.015060, std=0.001146
+    Row ranges: min=0.1138, max=0.3965, CV=0.2646
+    Row absmax: min=0.0605, max=0.2314, CV=0.3154
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.059940, max=0.065868, std=0.008495
+    Col stds:   min=0.004166, max=0.049721, std=0.003118
+    Col ranges: min=0.0228, max=0.2528, CV=0.4756
+    Col absmax: min=0.0120, max=0.2314, CV=0.6251
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00045565  (relative: 6.433%)
+    Per-row:     0.00023165  (relative: 3.270%)
+    Per-col:     0.00005391  (relative: 0.761%)
+    Winner:      per-col (329.7% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00045565  (relative: 6.433%)
+    Asymmetric MAE:  0.00042682  (relative: 6.026%)
+    Winner:          asymmetric (6.8% better)
+
+====================================================================================================
+  model.language_model.layers.35.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00035342
+    Std:      0.01045258
+    |Mean|/Std: 0.033811  (biased!)
+    Min:      -0.195312
+    Max:      0.212891
+    AbsMean:  0.00689944
+
+  Distribution Shape:
+    Skewness: 0.6225  (skewed!)
+    Kurtosis: 17.0187  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0615  -0.0260  -0.0132  -0.0049   0.0001   0.0051   0.0146   0.0330   0.0693
+
+  Outlier Analysis:
+    Max|val|:    0.212891
+    Max/Std:     20.37x
+    P99.9/Std:   7.38x
+    P99/Std:     3.83x
+    Max/P99.9:   2.76x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.16%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=0.000056, max=0.000777, std=0.000132
+    Row stds:   min=0.008714, max=0.013146, std=0.000940
+    Row ranges: min=0.0967, max=0.3311, CV=0.2258
+    Row absmax: min=0.0510, max=0.2129, CV=0.2938
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.055990, max=0.060463, std=0.008387
+    Col stds:   min=0.003296, max=0.044903, std=0.002540
+    Col ranges: min=0.0202, max=0.2429, CV=0.4708
+    Col absmax: min=0.0109, max=0.2129, CV=0.6133
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00041890  (relative: 6.071%)
+    Per-row:     0.00020281  (relative: 2.940%)
+    Per-col:     0.00004894  (relative: 0.709%)
+    Winner:      per-col (314.4% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00041890  (relative: 6.071%)
+    Asymmetric MAE:  0.00040001  (relative: 5.798%)
+    Winner:          asymmetric (4.7% better)
+
+Loading model-00024-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.36.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00050232
+    Std:      0.01020652
+    |Mean|/Std: 0.049216  (biased!)
+    Min:      -0.202148
+    Max:      0.165039
+    AbsMean:  0.00664917
+
+  Distribution Shape:
+    Skewness: 0.5624  (skewed!)
+    Kurtosis: 16.2423  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0601  -0.0260  -0.0128  -0.0044   0.0003   0.0050   0.0145   0.0327   0.0684
+
+  Outlier Analysis:
+    Max|val|:    0.202148
+    Max/Std:     19.81x
+    P99.9/Std:   7.42x
+    P99/Std:     3.85x
+    Max/P99.9:   2.67x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0004%
+    Near-zero (<0.01*std): 1.23%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=0.000222, max=0.000954, std=0.000128
+    Row stds:   min=0.008085, max=0.013425, std=0.001067
+    Row ranges: min=0.0967, max=0.3301, CV=0.2066
+    Row absmax: min=0.0515, max=0.2021, CV=0.2448
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.058439, max=0.059634, std=0.008275
+    Col stds:   min=0.003236, max=0.040455, std=0.002498
+    Col ranges: min=0.0203, max=0.2388, CV=0.4710
+    Col absmax: min=0.0112, max=0.2021, CV=0.6301
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00039745  (relative: 5.977%)
+    Per-row:     0.00019821  (relative: 2.981%)
+    Per-col:     0.00004692  (relative: 0.706%)
+    Winner:      per-col (322.5% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00039745  (relative: 5.977%)
+    Asymmetric MAE:  0.00035973  (relative: 5.410%)
+    Winner:          asymmetric (10.5% better)
+
+====================================================================================================
+  model.language_model.layers.37.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00037685
+    Std:      0.00993469
+    |Mean|/Std: 0.037932  (biased!)
+    Min:      -0.224609
+    Max:      0.161133
+    AbsMean:  0.00661421
+
+  Distribution Shape:
+    Skewness: 0.4453  (skewed!)
+    Kurtosis: 14.4444  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0574  -0.0253  -0.0130  -0.0045   0.0002   0.0049   0.0142   0.0308   0.0659
+
+  Outlier Analysis:
+    Max|val|:    0.224609
+    Max/Std:     22.61x
+    P99.9/Std:   7.22x
+    P99/Std:     3.76x
+    Max/P99.9:   3.13x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.11%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=0.000076, max=0.000700, std=0.000120
+    Row stds:   min=0.008055, max=0.012394, std=0.000951
+    Row ranges: min=0.1018, max=0.3135, CV=0.1980
+    Row absmax: min=0.0525, max=0.2246, CV=0.2524
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.056395, max=0.053071, std=0.008054
+    Col stds:   min=0.003446, max=0.037148, std=0.002371
+    Col ranges: min=0.0179, max=0.2438, CV=0.4588
+    Col absmax: min=0.0106, max=0.2246, CV=0.6159
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00044210  (relative: 6.684%)
+    Per-row:     0.00018519  (relative: 2.800%)
+    Per-col:     0.00004478  (relative: 0.677%)
+    Winner:      per-col (313.5% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00044210  (relative: 6.684%)
+    Asymmetric MAE:  0.00037836  (relative: 5.720%)
+    Winner:          asymmetric (16.8% better)
+
+Loading model-00025-of-00026.safetensors...
+
+====================================================================================================
+  model.language_model.layers.38.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00015485
+    Std:      0.00955813
+    |Mean|/Std: 0.016201  (biased!)
+    Min:      -0.193359
+    Max:      0.135742
+    AbsMean:  0.00660979
+
+  Distribution Shape:
+    Skewness: 0.3324  (skewed!)
+    Kurtosis: 10.1461  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0520  -0.0245  -0.0132  -0.0049  -0.0000   0.0049   0.0137   0.0280   0.0603
+
+  Outlier Analysis:
+    Max|val|:    0.193359
+    Max/Std:     20.23x
+    P99.9/Std:   7.00x
+    P99/Std:     3.55x
+    Max/P99.9:   2.89x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 1.08%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000152, max=0.000583, std=0.000109
+    Row stds:   min=0.007661, max=0.014157, std=0.001028
+    Row ranges: min=0.0847, max=0.2808, CV=0.1993
+    Row absmax: min=0.0444, max=0.1934, CV=0.2245
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.049416, max=0.045432, std=0.007785
+    Col stds:   min=0.003318, max=0.028480, std=0.002254
+    Col ranges: min=0.0183, max=0.2177, CV=0.4837
+    Col absmax: min=0.0106, max=0.1934, CV=0.5789
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00038063  (relative: 5.759%)
+    Per-row:     0.00015671  (relative: 2.371%)
+    Per-col:     0.00004503  (relative: 0.681%)
+    Winner:      per-col (248.0% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00038063  (relative: 5.759%)
+    Asymmetric MAE:  0.00032252  (relative: 4.879%)
+    Winner:          asymmetric (18.0% better)
+
+Loading model-00026-of-00026.safetensors...
+
+====================================================================================================
+  lm_head.weight
+  Shape: (248320, 2048), Dtype: torch.bfloat16, Size: 508,559,360 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00011393
+    Std:      0.01836879
+    |Mean|/Std: 0.006203  (well centered)
+    Min:      -0.300781
+    Max:      0.263672
+    AbsMean:  0.01440784
+
+  Distribution Shape:
+    Skewness: -0.0265  (symmetric)
+    Kurtosis: 0.6167  (Gaussian-like)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0649  -0.0442  -0.0300  -0.0120  -0.0001   0.0118   0.0298   0.0437   0.0625
+
+  Outlier Analysis:
+    Max|val|:    0.300781
+    Max/Std:     16.37x
+    P99.9/Std:   3.83x
+    P99/Std:     2.71x
+    Max/P99.9:   4.28x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 0.84%
+
+  Per-Row (output channel) Analysis [248320 rows]:
+    Row means:  min=-0.002143, max=0.001895, std=0.000390
+    Row stds:   min=0.008608, max=0.036062, std=0.002045
+    Row ranges: min=0.0728, max=0.5068, CV=0.2050
+    Row absmax: min=0.0371, max=0.3008, CV=0.2272
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.062879, max=0.049825, std=0.006012
+    Col stds:   min=0.014855, max=0.029560, std=0.001086
+    Col ranges: min=0.1396, max=0.3994, CV=0.1488
+    Col absmax: min=0.0703, max=0.3008, CV=0.1997
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00059204  (relative: 4.109%)
+    Per-row:     0.00015791  (relative: 1.096%)
+    Per-col:     0.00018934  (relative: 1.314%)
+    Winner:      per-row (19.9% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00059204  (relative: 4.109%)
+    Asymmetric MAE:  0.00055316  (relative: 3.839%)
+    Winner:          asymmetric (7.0% better)
+
+====================================================================================================
+  model.language_model.layers.39.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     -0.00022876
+    Std:      0.01186342
+    |Mean|/Std: 0.019283  (biased!)
+    Min:      -0.182617
+    Max:      0.145508
+    AbsMean:  0.00898916
+
+  Distribution Shape:
+    Skewness: 0.1136  (skewed!)
+    Kurtosis: 3.9753  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0510  -0.0287  -0.0186  -0.0076  -0.0003   0.0070   0.0183   0.0294   0.0579
+
+  Outlier Analysis:
+    Max|val|:    0.182617
+    Max/Std:     15.39x
+    P99.9/Std:   5.52x
+    P99/Std:     2.92x
+    Max/P99.9:   2.79x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0002%
+    Near-zero (<0.01*std): 0.86%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000729, max=0.000378, std=0.000154
+    Row stds:   min=0.009062, max=0.017036, std=0.001572
+    Row ranges: min=0.0662, max=0.2939, CV=0.2511
+    Row absmax: min=0.0342, max=0.1826, CV=0.3093
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.036819, max=0.043223, std=0.009487
+    Col stds:   min=0.004179, max=0.034208, std=0.002678
+    Col ranges: min=0.0223, max=0.2290, CV=0.4143
+    Col absmax: min=0.0142, max=0.1826, CV=0.4456
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00035966  (relative: 4.001%)
+    Per-row:     0.00015686  (relative: 1.745%)
+    Per-col:     0.00006097  (relative: 0.678%)
+    Winner:      per-col (157.3% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00035966  (relative: 4.001%)
+    Asymmetric MAE:  0.00032137  (relative: 3.575%)
+    Winner:          asymmetric (11.9% better)
+
+====================================================================================================
+  mtp.layers.0.mlp.gate.weight
+  Shape: (256, 2048), Dtype: torch.bfloat16, Size: 524,288 params
+====================================================================================================
+
+  Basic Stats:
+    Mean:     0.00006799
+    Std:      0.00963296
+    |Mean|/Std: 0.007058  (well centered)
+    Min:      -0.141602
+    Max:      0.125000
+    AbsMean:  0.00722743
+
+  Distribution Shape:
+    Skewness: -0.0001  (symmetric)
+    Kurtosis: 4.2055  (heavy tails!)
+
+  Percentiles:
+      P0.1       P1       P5      P25      P50      P75      P95      P99    P99.9
+    -0.0447  -0.0242  -0.0143  -0.0058  -0.0001   0.0058   0.0150   0.0254   0.0442
+
+  Outlier Analysis:
+    Max|val|:    0.141602
+    Max/Std:     14.70x
+    P99.9/Std:   5.22x
+    P99/Std:     3.16x
+    Max/P99.9:   2.82x  (spike outliers!)
+
+  Sparsity:
+    Exact zeros: 0.0000%
+    Near-zero (<0.01*std): 0.91%
+
+  Per-Row (output channel) Analysis [256 rows]:
+    Row means:  min=-0.000316, max=0.000455, std=0.000125
+    Row stds:   min=0.007405, max=0.013326, std=0.000965
+    Row ranges: min=0.0732, max=0.2637, CV=0.2506
+    Row absmax: min=0.0378, max=0.1416, CV=0.3036
+
+  Per-Col (input channel) Analysis [2048 cols]:
+    Col means:  min=-0.033294, max=0.038264, std=0.007889
+    Col stds:   min=0.003220, max=0.030341, std=0.001992
+    Col ranges: min=0.0167, max=0.1598, CV=0.4083
+    Col absmax: min=0.0093, max=0.1416, CV=0.4855
+
+  Simulated INT8 Quantization Error (MAE):
+    Per-tensor:  0.00027910  (relative: 3.862%)
+    Per-row:     0.00012882  (relative: 1.782%)
+    Per-col:     0.00004415  (relative: 0.611%)
+    Winner:      per-col (191.8% better)
+
+  Symmetric vs Asymmetric INT8 (per-tensor):
+    Symmetric MAE:   0.00027910  (relative: 3.862%)
+    Asymmetric MAE:  0.00026111  (relative: 3.613%)
+    Winner:          asymmetric (6.9% better)
+
+
+====================================================================================================
+WEIGHT TYING CHECK: embed_tokens vs lm_head
+====================================================================================================
+  Same shape: (248320, 2048)
+  Max absolute difference: 0.2955627441
+  => NOT tied (different weights)
+  Correlation (sample): 0.025919
+
+
+====================================================================================================
+ROUTER GATE ANALYSIS ACROSS LAYERS (41 layers)
+====================================================================================================
+
+  Per-layer mean range: [-0.000493, 0.000502]
+  Per-layer std range:  [0.009558, 0.026457]
+  Per-layer max|w| range: [0.1416, 0.4414]
+  Mean skewness: 0.2983 (range: [-0.0546, 0.6225])
+  Mean kurtosis: 14.4828 (range: [3.7293, 22.6129])
+
+  Row range CV (across experts): mean=0.2341
+  Col range CV (across hidden):  mean=0.4430
+  => Per-row (per-expert) is more uniform
+
+  Cross-layer consistency:
+    Std of means: 0.000229
+    Std of stds:  0.004324
+    => Variable across layers
+
+  QUANTIZATION NOTE for routers:
+    Routers compute softmax(W @ x) to select experts.
+    Small weight errors can change expert selection (top-k routing).
+    Mean kurtosis=14.5 indicates heavy tails.
+    Avg Max/Std = 19.1x => HIGH outlier risk
+    RECOMMENDATION: Keep router at higher precision (FP16 or INT8 with per-row scale)
